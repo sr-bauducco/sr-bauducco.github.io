@@ -4,42 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Assistente de Piscina</title>
+    <title>Assistente Casa de Máquinas</title>
+    <style>
+        .registro-suc { @apply bg-blue-600 px-2 py-0.5 rounded text-white font-bold; }
+        .registro-sai { @apply bg-amber-600 px-2 py-0.5 rounded text-black font-bold font-mono text-sm; }
+        .registro-alt { @apply bg-red-600 px-2 py-0.5 rounded text-white font-bold; }
+        .valvula { @apply bg-slate-700 px-2 py-1 rounded border border-white text-white font-mono uppercase text-sm; }
+    </style>
 </head>
-<body class="bg-slate-900 text-white font-sans p-4">
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen p-4">
 
-    <div id="app" class="max-w-md mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-blue-400">Casa de Máquinas</h1>
-            <p class="text-sm text-slate-400">Siga os passos com atenção</p>
+    <div id="app" class="max-w-md mx-auto pt-6">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-blue-400 tracking-tight">Piscina Segura 🌊</h1>
+            <p class="text-slate-400 text-sm mt-2 italic">Guia interativo para operação da casa de máquinas</p>
         </header>
 
-        <div id="menu" class="space-y-4">
-            <h2 class="text-lg mb-4 text-center">O que você vai fazer agora?</h2>
-            <button onclick="iniciarTarefa('filtrar')" class="w-full bg-blue-600 hover:bg-blue-500 p-6 rounded-xl text-xl font-semibold shadow-lg transition">🌊 Filtrar Água</button>
-            <button onclick="iniciarTarefa('aspirar')" class="w-full bg-emerald-600 hover:bg-emerald-500 p-6 rounded-xl text-xl font-semibold shadow-lg transition">🧹 Aspirar</button>
-            <button onclick="iniciarTarefa('lavar')" class="w-full bg-amber-600 hover:bg-amber-500 p-6 rounded-xl text-xl font-semibold shadow-lg transition">🚿 Lavar Filtro</button>
+        <div id="menu" class="grid gap-4">
+            <button onclick="startWizard('aspirar_drenando')" class="p-6 bg-slate-800 border-l-4 border-red-500 rounded-xl text-left shadow-lg hover:bg-slate-700 transition">
+                <span class="text-xs uppercase text-red-400 font-bold tracking-widest">Ação Crítica</span>
+                <h2 class="text-xl font-bold">Aspirar - Drenando</h2>
+                <p class="text-sm text-slate-400">Sujeira pesada. A água vai para o esgoto.</p>
+            </button>
+
+            <button onclick="startWizard('aspirar_filtrando')" class="p-6 bg-slate-800 border-l-4 border-emerald-500 rounded-xl text-left shadow-lg hover:bg-slate-700 transition">
+                <span class="text-xs uppercase text-emerald-400 font-bold tracking-widest">Manutenção</span>
+                <h2 class="text-xl font-bold">Aspirar - Filtrando</h2>
+                <p class="text-sm text-slate-400">Limpeza comum. A água retorna limpa.</p>
+            </button>
+
+            <button onclick="startWizard('aquecimento')" class="p-6 bg-slate-800 border-l-4 border-orange-500 rounded-xl text-left shadow-lg hover:bg-slate-700 transition">
+                <span class="text-xs uppercase text-orange-400 font-bold tracking-widest">Conforto</span>
+                <h2 class="text-xl font-bold">Ligar Aquecimento</h2>
+                <p class="text-sm text-slate-400">Circulação para aquecedor via terminal.</p>
+            </button>
         </div>
 
-        <div id="passos" class="hidden bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-2xl">
-            <div id="conteudo-passo">
+        <div id="wizard" class="hidden bg-slate-800 p-6 rounded-3xl shadow-2xl border border-slate-700">
+            <div id="step-content">
                 </div>
+            
+            <div class="mt-10 flex flex-col gap-3">
+                <button id="next-btn" onclick="nextStep()" class="w-full bg-blue-500 hover:bg-blue-400 text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all active:scale-95">
+                    PRÓXIMO PASSO
+                </button>
+                <button onclick="cancel()" class="w-full py-2 text-slate-500 text-sm hover:text-slate-300 transition">
+                    Cancelar e Voltar
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        const tarefas = {
-            filtrar: [
-                { msg: "⚠️ DESLIGUE A BOMBA no disjuntor antes de mexer na alavanca.", cor: "text-red-400" },
-                { msg: "Coloque a alavanca do filtro em: **FILTRAR**.", img: "alavanca_filtrar.jpg" },
-                { msg: "Abra os registros: **Skimmer** e **Ralo de Fundo**.", cor: "text-blue-300" },
-                { msg: "Feche o registro: **Aspiração**.", cor: "text-amber-200" },
-                { msg: "✅ Agora pode LIGAR a bomba.", cor: "text-green-400" }
+        const db = {
+            aspirar_drenando: [
+                { t: "1. Segurança", m: "<ol class='list-decimal ml-5 space-y-2'><li>Verifique se a <b>BOMBA está DESLIGADA</b> no disjuntor.</li><li>Nunca mova a alavanca com o motor ligado.</li></ol>", c: "text-red-400" },
+                { t: "2. Válvula Seletora", m: "<ol class='list-decimal ml-5'><li>Pressione a alavanca e gire para: <span class='valvula'>DRENAR</span></li></ol>" },
+                { t: "3. Registros de Entrada", m: "<ol class='list-decimal ml-5 space-y-2'><li>ABRA o registro <span class='registro-suc'>ASPIRAÇÃO</span></li><li>FECHE o registro <span class='registro-alt'>DRENO DE FUNDO</span></li></ol>" },
+                { t: "4. Saídas e Bypass", m: "<ol class='list-decimal ml-5 space-y-2'><li>ABRA os registros <span class='registro-sai'>ESGOTO</span> e <span class='registro-sai'>BYPASS</span></li><li>FECHE os <span class='underline'>Dois Registros sem nome</span>.</li></ol>" },
+                { t: "5. Finalização", m: "<ol class='list-decimal ml-5 space-y-2'><li>Ligue a bomba.</li><li>Monitore o nível da água na piscina.</li></ol>", c: "text-green-400" }
             ],
-            // Adicionar aspirar, lavar, etc.
+            aspirar_filtrando: [
+                { t: "1. Segurança", m: "<ol class='list-decimal ml-5'><li>Confirme: <b>BOMBA DESLIGADA</b>.</li></ol>", c: "text-red-400" },
+                { t: "2. Válvula Seletora", m: "<ol class='list-decimal ml-5'><li>Gire para a posição: <span class='valvula'>FILTRAR</span></li></ol>" },
+                { t: "3. Entradas", m: "<ol class='list-decimal ml-5 space-y-2'><li>ABRA a <span class='registro-suc'>ASPIRAÇÃO</span></li><li>FECHE o <span class='registro-alt'>DRENO DE FUNDO</span></li></ol>" },
+                { t: "4. Saídas", m: "<ol class='list-decimal ml-5 space-y-2'><li>ABRA o <span class='registro-sai'>RETORNO</span> e o <span class='registro-sai'>BYPASS</span></li><li>FECHE o <span class='registro-alt text-sm uppercase font-bold'>ESGOTO</span></li><li>FECHE os <span class='underline'>Dois Registros sem nome</span>.</li></ol>" },
+                { t: "5. Finalização", m: "<ol class='list-decimal ml-5'><li>Ligue a bomba. A água voltará limpa.</li></ol>", c: "text-green-400" }
+            ],
+            aquecimento: [
+                { t: "1. Segurança", m: "<ol class='list-decimal ml-5'><li>Confirme: <b>BOMBA DESLIGADA</b>.</li></ol>", c: "text-red-400" },
+                { t: "2. Válvula Seletora", m: "<ol class='list-decimal ml-5'><li>Gire para a posição: <span class='valvula'>FILTRAR</span></li></ol>" },
+                { t: "3. Entradas", m: "<ol class='list-decimal ml-5 space-y-2'><li>ABRA o <span class='registro-suc'>DRENO DE FUNDO</span></li><li>FECHE a <span class='registro-alt'>ASPIRAÇÃO</span></li></ol>" },
+                { t: "4. Circuito de Aquecimento", m: "<ol class='list-decimal ml-5 space-y-2'><li>FECHE o <span class='registro-alt font-mono text-sm uppercase'>BYPASS</span></li><li>ABRA as <span class='bg-emerald-600 px-2 py-0.5 rounded text-white font-bold'>Duas Válvulas sem nome</span>.</li></ol>" },
+                { t: "5. Ativação Técnica", m: "<ol class='list-decimal ml-5 space-y-2'><li>Ligue a bomba no painel.</li><li>Acesse o <b>Terminal no Telefone</b> e ligue o aquecedor.</li></ol>", c: "text-green-400" }
+            ]
         };
 
-        // Lógica simples de navegação...
+        let currentTask = [];
+        let currentStep = 0;
+
+        function startWizard(task) {
+            currentTask = db[task];
+            currentStep = 0;
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('wizard').classList.remove('hidden');
+            renderStep();
+        }
+
+        function renderStep() {
+            const step = currentTask[currentStep];
+            const btn = document.getElementById('next-btn');
+            
+            document.getElementById('step-content').innerHTML = `
+                <p class="text-xs uppercase tracking-[0.2em] text-blue-400 font-bold mb-4 border-b border-slate-700 pb-2">${step.t}</p>
+                <div class="text-lg leading-relaxed ${step.c || ''}">
+                    ${step.m}
+                </div>
+            `;
+
+            btn.innerText = (currentStep === currentTask.length - 1) ? "CONCLUIR" : "PRÓXIMO PASSO";
+            btn.className = (currentStep === currentTask.length - 1) 
+                ? "w-full bg-green-600 hover:bg-green-500 text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all" 
+                : "w-full bg-blue-500 hover:bg-blue-400 text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all";
+        }
+
+        function nextStep() {
+            if (currentStep < currentTask.length - 1) {
+                currentStep++;
+                renderStep();
+            } else {
+                cancel();
+            }
+        }
+
+        function cancel() {
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('wizard').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
