@@ -5,68 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/style.css">
-    <title>Israel | Engenharia de Computação UnB</title>
+    <title>Israel Teles | Engenharia de Computação</title>
 </head>
 <body class="text-slate-200 font-sans selection:bg-blue-500/30 min-h-screen">
 
-    <div class="max-w-4xl mx-auto px-6 py-16">
+    <nav class="fixed top-0 w-full z-50 card-glass border-b border-white/10">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="font-mono text-blue-400 font-bold">ITB.exe</span>
+            <div class="flex gap-6 text-xs uppercase tracking-widest font-bold">
+                <a href="#sobre" class="hover:text-blue-400 transition">Sobre</a>
+                <a href="#projetos" class="hover:text-blue-400 transition">Projetos</a>
+                <a href="#formacao" class="hover:text-blue-400 transition">Formação</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-6 pt-32 pb-16">
         <header class="mb-16 fade-in-up">
             <h1 class="text-5xl font-extrabold mb-4 tracking-tight text-white">
-                Israel Teles Bandeira <span class="text-blue-500">_</span>
+                Israel Teles <span class="text-blue-500">_</span>
             </h1>
             <div class="h-8">
                 <p class="text-xl text-blue-400 font-mono typewriter uppercase">Engenharia de Computação @ UnB</p>
             </div>
             
+            <div id="sobre" class="mt-10 p-6 rounded-2xl bg-blue-500/5 border border-blue-500/20">
+                <h2 class="text-sm uppercase tracking-widest font-bold mb-3 text-blue-300 italic">// Perfil Profissional</h2>
+                <p class="section-text text-base">
+                    Estudante de Engenharia de Computação focado em transformar tecnologia em impacto real. 
+                    Com experiência sólida em Python, MLOps (Docker, Kubernetes) e desenvolvimento de 
+                    Agentes Inteligentes (LangChain), busco criar soluções autoadaptativas e eficientes. 
+                    Atuei como gerente de projetos sob metodologia ágil, unindo visão técnica e liderança.
+                </p>
+            </div>
+
             <div class="flex gap-4 mt-8">
-                <a href="mailto:israel.teles@exemplo.com" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full transition shadow-lg shadow-blue-900/20 text-sm font-bold text-white">📧 Contato</a>
-                <a href="https://github.com/israelteles" target="_blank" class="bg-slate-800 hover:bg-slate-700 px-6 py-2 rounded-full transition border border-slate-600 text-sm font-bold text-white">💻 GitHub</a>
+                <a href="mailto:israel.telesbandeira@gmail.com" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full transition shadow-lg shadow-blue-900/20 text-sm font-bold text-white">📧 Contato</a>
+                <a href="https://github.com/sr-bauducco" target="_blank" class="bg-slate-800 hover:bg-slate-700 px-6 py-2 rounded-full transition border border-slate-600 text-sm font-bold text-white">💻 GitHub</a>
             </div>
         </header>
 
-        <section class="mb-20">
+        <section id="projetos" class="mb-20">
             <h2 class="text-xs uppercase tracking-[0.3em] font-bold mb-8 text-slate-500">Projetos em Destaque</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 <div class="p-8 rounded-2xl card-glass hover:border-blue-500/50 transition group flex flex-col justify-between fade-in-up delay-1">
                     <div>
                         <h3 class="text-xl font-bold mb-3 group-hover:text-blue-400 transition">SigaaWatch</h3>
                         <p class="text-sm text-slate-400 mb-6 leading-relaxed">Automação de scraping para o sistema acadêmico da UnB utilizando Python e Playwright.</p>
                         <div class="flex gap-3 mb-8">
                             <span class="text-[10px] font-bold bg-blue-900/50 px-2 py-1 rounded text-blue-300 border border-blue-800 uppercase">Python</span>
-                            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase">Playwright</span>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <a href="https://github.com/sr-bauducco/SigaaWatch" target="_blank" class="text-xs font-bold text-blue-400 hover:text-white transition flex items-center gap-1">
-                            Ver Código ↗
-                        </a>
-                    </div>
+                    <a href="https://github.com/sr-bauducco/SigaaWatch" target="_blank" class="text-xs font-bold text-blue-400 hover:text-white transition">Ver Código ↗</a>
                 </div>
 
                 <div class="p-8 rounded-2xl card-glass hover:border-emerald-500/50 transition group flex flex-col justify-between fade-in-up delay-2">
                     <div>
-                        <h3 class="text-xl font-bold mb-3 group-hover:text-emerald-400 transition">Rusty-Weather</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Dashboard de monitoramento meteorológico embarcado com ESP32 e Rust.</p>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-emerald-400 transition">PIBIC: Sistemas Autoadaptativos</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Pesquisa em microsserviços autônomos utilizando OSGi, Docker e Kubernetes.</p>
                         <div class="flex gap-3 mb-8">
-                            <span class="text-[10px] font-bold bg-emerald-900/50 px-2 py-1 rounded text-emerald-300 border border-emerald-800 uppercase">Rust</span>
-                            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase">MQTT</span>
+                            <span class="text-[10px] font-bold bg-emerald-900/50 px-2 py-1 rounded text-emerald-300 border border-emerald-800 uppercase">OSGi</span>
+                            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase">K8s</span>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <a href="https://github.com/JonasdeSouza/rusty-weather" target="_blank" class="text-xs font-bold text-emerald-400 hover:text-white transition flex items-center gap-1">
-                            Ver Código ↗
-                        </a>
+                    <span class="text-[10px] font-bold text-slate-500 italic">Em desenvolvimento</span>
+                </div>
+            </div>
+
+        <div class="p-8 rounded-2xl card-glass hover:border-emerald-500/50 transition group flex flex-col justify-between fade-in-up delay-2">
+    <div>
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold group-hover:text-emerald-400 transition">RustuWeather</h3>
+            <span class="text-[10px] font-bold bg-emerald-900/30 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">IOT / EMBEDDED</span>
+        </div>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+            Dashboard meteorológico e sistema de monitoramento desenvolvido em <b>Rust</b> para <b>ESP32</b>. 
+            Utiliza protocolo <b>MQTT</b> para comunicação em tempo real e visualização de dados climáticos.
+        </p>
+        <div class="flex flex-wrap gap-2 mb-8">
+            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase tracking-tighter">Rust</span>
+            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase tracking-tighter">ESP32</span>
+            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase tracking-tighter">MQTT</span>
+            <span class="text-[10px] font-bold bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase tracking-tighter">Grafana</span>
+        </div>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/JonasdeSouza/rusty-weather" target="_blank" class="text-xs font-bold text-emerald-400 hover:text-white transition flex items-center gap-1">
+            Ver Repositório ↗
+        </a>
+    </div>
+</div>
+        </section>
+
+        <section id="formacao" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 fade-in-up delay-2">
+            <div>
+                <h2 class="text-xs uppercase tracking-[0.3em] font-bold mb-6 text-slate-500">Educação</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-white font-bold">Bacharelado em Eng. de Computação</h4>
+                        <p class="text-sm text-blue-400">Universidade de Brasília (UnB)</p>
+                        <p class="text-xs text-slate-500">Previsão: Julho 2027</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold">Técnico em Informática</h4>
+                        <p class="text-sm text-blue-400">Instituto Federal de Brasília (IFB)</p>
+                        <p class="text-xs text-slate-500">Concluído em 2020 • Honra ao Mérito</p>
                     </div>
                 </div>
-
+            </div>
+            <div>
+                <h2 class="text-xs uppercase tracking-[0.3em] font-bold mb-6 text-slate-500">Tech Stack</h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">Python</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">TypeScript</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">Java</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">LangChain</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">Docker</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">Kubernetes</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-md text-xs border border-slate-700">AWS</span>
+                </div>
             </div>
         </section>
 
-        <footer class="text-center pt-12 border-t border-slate-800/50 fade-in-up delay-2">
+        <footer class="text-center pt-12 border-t border-slate-800/50">
             <p class="text-xs text-slate-600 mb-6 italic">© 2026 Israel Teles Bandeira</p>
             <a href="./piscina/" class="text-[10px] uppercase tracking-widest text-slate-700 hover:text-blue-500 transition-colors duration-500">
-                Acesso Restrito: Sistema de Gestão Residencial
+                Acesso Restrito: Sistema Residencial
             </a>
         </footer>
     </div>
